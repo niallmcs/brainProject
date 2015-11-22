@@ -1,0 +1,11 @@
+nose
+matplotlib
+python-dateutil
+pytz
+pyparsing
+Cycler
+scipy
+sympy
+ipython
+pandas
+numpy

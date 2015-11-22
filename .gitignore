@@ -1,0 +1,4 @@
+.eggs/*
+brain_project.egg-info/*
+data
+bin
