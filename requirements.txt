@@ -1,3 +1,4 @@
+nilearn
 nose
 matplotlib
 python-dateutil
@@ -9,3 +10,5 @@ sympy
 ipython
 pandas
 numpy
+scikit-learn
+pymvpa

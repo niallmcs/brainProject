@@ -1,0 +1,2 @@
+#Command
+ipython notebook
