@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 from nilearn import image
 from nilearn import plotting
 
@@ -10,9 +11,22 @@ def __main__():
 
     plotting.plot_glass_brain(volume, title='plot_glass_brain',
     black_bg=True, display_mode='xz')
+    plotting.plot_glass_brain(volume, title='plot_glass_brain',
+    black_bg=False, display_mode='xz')
 
     plt.show()
 
     # print("Finished");
+
+
+
+    #gemerate some numbers
+    t = np.linspace(1, 10, 2000)  # 2000 points between 1 and 10
+    t
+
+    #plot the graph
+    plt.plot(t, np.cos(t))
+    plt.ylabel('Subject Response')
+    plt.show()
 
 __main__()
