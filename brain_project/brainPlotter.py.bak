@@ -1,13 +1,4 @@
-# emacs: -*- mode: python; py-indent-offset: 4; indent-tabs-mode: nil -*-
-# vi: set ft=python sts=4 ts=4 sw=4 et:
-### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ##
-#
-#   See COPYING file distributed along with the PyMVPA package for the
-#   copyright and license terms.
-#
-### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ##
 """Basic (f)MRI plotting with ability to interactively perform thresholding
-
 """
 
 import pylab as pl
@@ -44,17 +35,14 @@ def plot_lightbox(background=None, background_mask=None, cmap_bg='gray',
             slices=None, slice_title="k=%(islice)s"
             ):
     """Very basic plotting of 3D data with interactive thresholding.
-
     `background`/`overlay` and corresponding masks could be nifti
     files names or `SpatialImage` objects, or 3D `ndarrays`. If no mask
     is provided, only non-0 elements are plotted.
-
     Notes
     -----
     No care is taken to deduce the orientation (e.g. Left-to-Right,
     Posterior-to-Anterior) of fMRI volumes.  Therefore all input
     volumes should be in the same orientation.
-
     Parameters
     ----------
     do_stretch_colors : bool, optional
@@ -88,10 +76,8 @@ def plot_lightbox(background=None, background_mask=None, cmap_bg='gray',
     slice_title : None or str
       Desired title of slices.  Use string comprehension and assume
       `islice` variable present with current slice index.
-
     Available colormaps are presented nicely on
       http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps
-
     TODO:
       * Make interface more attractive/usable
       * allow multiple overlays... or just unify for them all to be just a list of entries
@@ -437,7 +423,6 @@ def plot_lightbox(background=None, background_mask=None, cmap_bg='gray',
   mean = %(m).3g
   median = %(mm).3g
   std = %(std).3g
-
  Thresholded: %(sthr)s:
   voxels = %(vt)d
   range = [%(mint).3g, %(maxt).3g]
