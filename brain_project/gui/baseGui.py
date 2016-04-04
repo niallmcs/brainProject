@@ -355,6 +355,8 @@ class Example(Frame):
         for num in range(0, range_max):
             # self.processing_progress = "{}/{}".format(num, range_max)
 
+            print("{}/{}".format(num, range_max))
+
             # if(num > 1000):
             #     correlation_results.append(0)
             #     continue
@@ -376,7 +378,7 @@ def main():
     root = Tk()
     # root.geometry("500x400+300+300")
     app = Example(root)
-    root.mainloop()  
+    root.mainloop()
 
 
 if __name__ == '__main__':
