@@ -1,6 +1,8 @@
 class FoldWiseProcessor:
 
-    def __init(self, dataset, trajectory, analyser, number_of_folds, skip_nearest_neighbours=false):
+    results = []
+
+    def __init__(self, dataset, trajectory, analyser, number_of_folds, skip_nearest_neighbours=false):
         #store all relevant information
         self.dataset = dataset
         self.trajectory = trajectory
@@ -12,7 +14,35 @@ class FoldWiseProcessor:
 
 
     def process(self):
+
+        #every time this method is run, it will wipe the current state of #results
         print("starting to process")
+
+        #set the turn
+        turn = 0
+
+        for i in range(0, number_of_folds):
+            print("starting turn " + turn)
+
+            #get the relevant data
+            training_set = get_current_training_set(turn)
+            test_set = get_current_test_set(turn)
+
+            #train the analyser/model
+            analyser.train(training_set)
+
+            #get the prediction based on the chunks
+            predictions = analyser.predict(test_set)
+
+            #append the predictions to the global results
+            results.append(predictions)
+
+            #increment the turn
+            turn = turn + 1
+
+        print("Finished process")
+
+        return process
 
 
     def get_current_training_set(self, turn):
@@ -45,6 +75,10 @@ class FoldWiseProcessor:
 
         #return the current chunk
         return self.chunks[i]
+
+
+    def get_current_results(self):
+        return results
 
 def split_list(alist, wanted_parts=1):
     length = len(alist)
