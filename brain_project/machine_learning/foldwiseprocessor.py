@@ -56,7 +56,11 @@ class FoldWiseProcessor:
             #     temp_results = predictions.ravel()
             #     print(temp_results)
             #else:
-            temp_results.extend(predictions.ravel())
+            if type(predictions) is list:
+                temp_results.extend(predictions)
+            else:
+                print(type(predictions))
+                temp_results.extend(predictions.ravel())
 
             #increment the turn
             turn = turn + 1
@@ -128,7 +132,7 @@ class FoldWiseProcessor:
             if turn > 1:
                 new_ds = new_ds[new_ds.sa.fold_num != turn-1]
 
-            if i < len(self.chunks)-1:
+            if turn < self.number_of_folds-1:
                 new_ds = new_ds[new_ds.sa.fold_num != turn+1]
         return new_ds
 
