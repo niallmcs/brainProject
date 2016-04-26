@@ -1,95 +1,39 @@
-import tkinter as tk
-import base_view as bv
-from views.file_input_view import FileInputView
-from views.graph_plot_view import GraphPlotView
+from base_task_view import BaseTaskView
+
 from models.file_input_model import FileInputModel
+from models.base_processing_model import BaseProcessingModel
+from models.base_processing_request_model import BaseProcessingRequestModel
+from util import file_handler
 
-from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, BOTTOM, ttk, Canvas
+class BaseMachineLearningView(BaseTaskView):
 
-class BaseMachineLearningView(bv.BaseView):
-
-    TITLE_FONT = ("Helvetica", 20, "bold")
-    BUTTON_FONT = ("Helvetica", 20)
-    STATUS_FONT = ("Helvetica", 20)
+    title = "Machine Learning View"
 
     def create_widgets(self):
-        # label = tk.Label(self, text="Machine Learning View", font=self.TITLE_FONT)
-        # label.pack(side="top", fill="x", pady=10)
-        # button = tk.Button(self, text="Go to the start page",
-        #                    command=lambda: self.controller.show_frame("SetupScreen"))
-        # button.pack()
 
-        self.grid()
+        self.input_models = []
 
-        for r in range(6):
-            self.rowconfigure(r, weight=1)    
-        for c in range(2):
-            self.columnconfigure(c, weight=1)
-            #Button(self, text="Button {0}".format(c)).grid(row=6,column=c,sticky=E+W)
+        self.input_models.append(
+            FileInputModel("BOLD", "The BOLD data for the story", [('NIFTI files', '*.nii;*nii.gz'), ('HDR files', '*.hdr'), ('All files', '*')], file_handler.open_nifti))
+        self.input_models.append(
+            FileInputModel("Mask", "The mask to remove useless brain data", [('NIFTI files', '*.nii;*nii.gz'), ('HDR files', '*.hdr'), ('All files', '*')], file_handler.open_nifti))
+        self.input_models.append(
+            FileInputModel("Story", "The story data points", [('MATLAB files', '*.mat'), ('All files', '*')], file_handler.open_matlab))
+        self.input_models.append(
+            FileInputModel("Trjactory", "The story data points", [('PICKLE files', '*.pkl'), ('All files', '*')], file_handler.open_pickle))
 
-        frame1 = Frame(self) #, bg="red"
-        frame1.grid(row = 0, column = 0, rowspan = 6, columnspan = 1, sticky = W+E+N+S)
+        super(BaseMachineLearningView, self).create_widgets()
 
+    def update_ui_from_processing(self, *args):
 
-        title_label = ttk.Label(frame1, text="Regression", font=self.TITLE_FONT)
-        title_label.pack(fill=BOTH, padx=25, pady=20)
+        self.status_text.set(self.processing_model.progress.get() + " [" + self.processing_model.state.get() + "]")
 
-        bold_file_input_model = FileInputModel("BOLD", "The BOLD data for the story", ["nifti"])
-        bold_file_input_view = FileInputView(frame1, bold_file_input_model)
-        bold_file_input_view.pack(fill=BOTH)
+        self.update_ui()
 
-        story_file_input_model = FileInputModel("Story", "The story data points", ["nifti"])
-        story_file_input_view = FileInputView(frame1, story_file_input_model)
-        story_file_input_view.pack(fill=BOTH)
+        if self.processing_model.state.get() == self.processing_model.FINISHED:
+            self.is_processing_active = False
 
-        trajectory_file_input_model = FileInputModel("Trjactory", "The story data points", ["nifti"])
-        trajectory_file_input_view = FileInputView(frame1, trajectory_file_input_model)
-        trajectory_file_input_view.pack(fill=BOTH)
+            self.display_results()
 
-        anatomy_file_input_model = FileInputModel("Anatomy", "The story data points", ["nifti"])
-        anatomy_file_input_view = FileInputView(frame1, anatomy_file_input_model)
-        anatomy_file_input_view.pack(fill=BOTH)
-
-
-        process_button_style = ttk.Style()
-        process_button_style.configure("Bold.TButton", font = ('Sans','20'))
-
-        process_button = ttk.Button(frame1, text="PROCESS", width=20, style="Bold.TButton")
-        process_button.pack(side=BOTTOM, padx=5, pady=50)
-
-
-        # file_load_frame = Frame(frame1, bg="gold")
-        # file_load_frame.pack(fill=BOTH)
-
-        # title_button_frame = Frame(file_load_frame, bg="purple")
-        # title_button_frame.pack(fill=BOTH)
-
-        # bold_label = ttk.Label(title_button_frame, text="BOLD", font=self.TITLE_FONT)
-        # bold_label.pack(side=LEFT, padx=5, pady=5)
-
-        # load_button = ttk.Button(title_button_frame, text="LOAD")
-        # load_button.pack(side=RIGHT, padx=5, pady=5)
-
-        # filename_label = Label(file_load_frame, text="Path")
-        # filename_label.pack(side=LEFT, padx=5, pady=5)
-
-        # w = Canvas(file_load_frame, width=500, height=2)
-        # w.pack()
-        # w.create_line(0, 0, 500, 0, width=5)
-
-        frame2 = GraphPlotView(self)
-        frame2.grid(row = 0, column = 1, rowspan = 3, columnspan = 1, sticky = W+E+N+S)
-
-        frame3 = Frame(self, bg="white")
-        frame3.grid(row = 3, column = 1, rowspan = 3, columnspan = 1, sticky = W+E+N+S)
-
-        status_label = Label(frame3, text="Status: ", font=self.TITLE_FONT, bg="white")
-        status_label.pack(side=LEFT, padx=5, pady=5)
-
-        current_status_label = Label(frame3, text="Processing", bg="white", font=self.STATUS_FONT)
-        current_status_label.pack(side=LEFT, padx=5, pady=5)
-
-    def setup_window_details(self):
-        self.controller.title("Abstract Machine Learning View")
-        self.controller.geometry("1000x600")
-        self.center()
+            #enable the button to stop multiple
+            self.check_processing_possible()

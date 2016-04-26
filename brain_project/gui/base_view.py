@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import StringVar
 
 class BaseView(tk.Frame):
 
@@ -11,6 +12,8 @@ class BaseView(tk.Frame):
         self.grid()
         self.create_widgets()
         self.setup_window_details()
+
+        
 
     def create_widgets(self):
         """Create the widgets for the frame."""

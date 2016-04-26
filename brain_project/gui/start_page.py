@@ -17,7 +17,7 @@ class StartPage(bv.BaseView):
         button1 = tk.Button(self, text="Find Correlation between story and fMRI data",
                             command=lambda: self.controller.show_frame("BaseMachineLearningView"), borderwidth=0)
         button2 = tk.Button(self, text="Predict emotional response using Classification",
-                            command=lambda: self.controller.show_frame("PageTwo"), borderwidth=0)
+                            command=lambda: self.controller.show_frame("ClassificationTaskView"), borderwidth=0)
         button1.pack(padx=5, pady=5)
         button2.pack(padx=5, pady=5)
 

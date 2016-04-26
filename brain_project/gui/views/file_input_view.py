@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, ttk, Canvas
+
+from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, ttk, Canvas, filedialog, StringVar
 
 class FileInputView(tk.Frame):
 
@@ -19,10 +20,10 @@ class FileInputView(tk.Frame):
         title_button_frame = Frame(file_load_frame) #, bg="purple"
         title_button_frame.pack(fill=BOTH)
 
-        bold_label = ttk.Label(title_button_frame, text=self.model.title, font=self.TITLE_FONT)
-        bold_label.pack(side=LEFT, padx=5, pady=5)
+        title_label = ttk.Label(title_button_frame, text=self.model.title, font=self.TITLE_FONT)
+        title_label.pack(side=LEFT, padx=5, pady=5)
 
-        load_button = ttk.Button(title_button_frame, text="LOAD")
+        load_button = ttk.Button(title_button_frame, text="SELECT", command=self.openFile)
         load_button.pack(side=RIGHT, padx=5, pady=5)
 
 
@@ -31,5 +32,24 @@ class FileInputView(tk.Frame):
         else:
             filename_text = self.model.location
 
-        filename_label = Label(file_load_frame, text=filename_text)
+        filename_label = Label(file_load_frame, textvariable=self.model.location_text)
         filename_label.pack(side=LEFT, padx=5, pady=5)
+
+
+    def openFile(self):
+        file = self.onOpen(self.model.file_types)
+        if file is not None:
+            self.model.location = file
+            self.model.location_text.set(file)
+
+        print(self.model.location)
+
+
+    def onOpen(self, types):
+      
+        ftypes = types
+        dlg = filedialog.Open(self, filetypes = ftypes)
+        fl = dlg.show()
+        
+        if fl != '':
+            return fl
