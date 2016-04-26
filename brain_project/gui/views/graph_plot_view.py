@@ -48,7 +48,7 @@ class GraphPlotView(tk.Frame):
         #toolbar.update()
         #canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-    def plot_results(self, results):
+    def plot_results(self, original, results):
 
 
         print("got this far")
@@ -56,12 +56,12 @@ class GraphPlotView(tk.Frame):
             self.ax1.clear()
         self.ax1 = self.figure.add_subplot(211)
         self.ax1.set_title('Original Trajectory')
-        self.ax1.plot(results)
+        self.ax1.plot(original)
 
         if self.ax2 is not None:
             self.ax2.clear()
         self.ax2 = self.figure.add_subplot(212, sharex=self.ax1, sharey=self.ax1)
         self.ax2.set_title('Predicted Trajectory')
         self.value = self.value+1
-        self.ax2.plot([1,2,3,4,5],[5,6,7,8,self.value])
+        self.ax2.plot(results)
         self.canvas.draw()

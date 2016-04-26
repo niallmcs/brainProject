@@ -6,3 +6,7 @@ class BaseProcessingRequestModel():
         self.anatomy_location = anatomy_location
         self.story_location = story_location
         self.trajectory_location = trajectory_location
+
+    def printValues(self):
+        print("")
+        print("mask Location " + self.mask_location)

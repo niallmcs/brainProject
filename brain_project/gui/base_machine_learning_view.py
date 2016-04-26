@@ -16,7 +16,7 @@ class BaseMachineLearningView(BaseTaskView):
         self.input_models.append(
             FileInputModel("BOLD", "The BOLD data for the story", [('NIFTI files', '*.nii;*nii.gz'), ('HDR files', '*.hdr'), ('All files', '*')], file_handler.open_nifti))
         self.input_models.append(
-            FileInputModel("Mask", "The mask to remove useless brain data", [('NIFTI files', '*.nii;*nii.gz'), ('HDR files', '*.hdr'), ('All files', '*')], file_handler.open_nifti))
+            FileInputModel("Mask", "The mask to remove useless brain data", [('HDR files', '*.hdr'), ('NIFTI files', '*.nii;*nii.gz'), ('All files', '*')], file_handler.open_nifti))
         self.input_models.append(
             FileInputModel("Story", "The story data points", [('MATLAB files', '*.mat'), ('All files', '*')], file_handler.open_matlab))
         self.input_models.append(
@@ -37,3 +37,7 @@ class BaseMachineLearningView(BaseTaskView):
 
             #enable the button to stop multiple
             self.check_processing_possible()
+
+    def display_results(self):
+
+        self.result_view.plot_results(self.processing_model.original, self.processing_model.result)

@@ -16,15 +16,12 @@ import gzip
 from mvpa2.suite import *
 from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeRegressor
 
 
-class ClassificationTaskProcessor(BaseMachineLearningTaskProcessor):
+class RegressionTaskProcessor(BaseMachineLearningTaskProcessor):
 
     def compute_result(self):
-        self.resampled_trajectory = targetdatautility.convert_targets_to_simple_values(self.resampled_trajectory)
-        self.processing_model.original = self.resampled_trajectory
-        self.ds.sa['targets'] = self.resampled_trajectory
-        
-        fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, kNN(k=5, dfx=one_minus_correlation, voting='majority'), self.num_folds, True)
+        fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, SKLLearnerAdapter(DecisionTreeRegressor()), self.num_folds, True)
         fold_wise_processor.process()
         self.processing_model.result = fold_wise_processor.results

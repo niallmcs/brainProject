@@ -19,7 +19,11 @@ class StartPage(bv.BaseView):
         button2 = tk.Button(self, text="Predict emotional response using Classification",
                             command=lambda: self.controller.show_frame("ClassificationTaskView"), borderwidth=0)
         button1.pack(padx=5, pady=5)
+        regression_button = tk.Button(self, text="Predict emotional response using Regression",
+                            command=lambda: self.controller.show_frame("RegressionTaskView"), borderwidth=0)
+        button1.pack(padx=5, pady=5)
         button2.pack(padx=5, pady=5)
+        regression_button.pack(padx=5, pady=5)
 
         about_button = tk.Button(self, text="About",
                             command=lambda: self.controller.show_frame("AboutPage"), borderwidth=0)

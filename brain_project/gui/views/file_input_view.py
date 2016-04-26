@@ -32,7 +32,7 @@ class FileInputView(tk.Frame):
         else:
             filename_text = self.model.location
 
-        filename_label = Label(file_load_frame, textvariable=self.model.location_text)
+        filename_label = Label(file_load_frame, textvariable=self.model.location_text, wraplength=300)
         filename_label.pack(side=LEFT, padx=5, pady=5)
 
 

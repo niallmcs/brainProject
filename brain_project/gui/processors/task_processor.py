@@ -5,6 +5,7 @@ import time
 class TaskProcessor(threading.Thread):
 
     NOT_STARTED = "Not Started"
+    SETUP = "Setting up"
     FINISHED = "Finished"
     PROCESSING = "Processing"
 

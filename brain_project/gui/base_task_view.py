@@ -105,14 +105,32 @@ class BaseTaskView(bv.BaseView):
         #disable the button to stop multiple
         self.check_processing_possible()
 
-        self.processing_model = BaseProcessingModel(BaseProcessingRequestModel("boldLoc", "maskLoc", "anaLoc", "storyLoc", "trajLoc"))
+        #get the locaiton of the files
+        bold_loc = mask_loc = story_loc = trajectory_loc = anatomy_loc = ""
+
+        for input_model in self.input_models:
+            if input_model.title == "BOLD":
+                bold_loc = input_model.location
+            elif input_model.title == "Mask":
+                mask_loc = input_model.location
+            elif input_model.title == "Story":
+                story_loc = input_model.location
+            elif input_model.title == "Trjactory":
+                trajectory_loc = input_model.location
+            elif input_model.title == "Anatomy":
+                anatomy_loc = input_model.location
+
+
+        processing_model = BaseProcessingRequestModel(bold_loc, mask_loc, anatomy_loc, story_loc, trajectory_loc)
+
+        self.processing_model = BaseProcessingModel(processing_model)
 
         #set up tracking for the state and progress
         self.processing_model.progress.trace("w", self.update_ui_from_processing)
-        #self.processing_model.state.trace("w", self.update_ui_from_processing)
+        self.processing_model.state.trace("w", self.update_ui_from_processing)
 
         self.queue = queue.Queue()
-        TaskProcessor(self.queue, self.processing_model).start()
+        #TaskProcessor(self.queue, self.processing_model).startit()
         #self.master.after(100, self.process_queue)
 
     def update_ui_from_processing(self, *args):
@@ -131,7 +149,7 @@ class BaseTaskView(bv.BaseView):
 
     def display_results(self):
 
-        self.result_view.plot_results(self.processing_model.result)
+        self.result_view.plot_results(self.processing_model.result, self.processing_model.result)
 
     def update_ui(self):
         pass
