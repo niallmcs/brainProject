@@ -84,7 +84,8 @@ class BaseTaskView(bv.BaseView):
             else:
                 self.is_processing_possible = True
 
-        self.is_processing_possible = True
+        #enable only if testing
+        #self.is_processing_possible = True
 
         #check to see if already processing
         if self.is_processing_active:

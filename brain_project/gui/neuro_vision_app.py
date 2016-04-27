@@ -23,7 +23,7 @@ class NeuroVisionApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, BaseMachineLearningView, PageTwo, AboutPage, ClassificationTaskView, RegressionTaskView, CorrelationTaskView):
+        for F in (StartPage, BaseMachineLearningView, AboutPage, ClassificationTaskView, RegressionTaskView, CorrelationTaskView):
             page_name = F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame
@@ -40,29 +40,6 @@ class NeuroVisionApp(tk.Tk):
         frame = self.frames[page_name]
         frame.tkraise()
         frame.setup_window_details()
-
-class PageOne(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="This is page 1", font=TITLE_FONT)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
-
-
-class PageTwo(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
 
 
 if __name__ == "__main__":
