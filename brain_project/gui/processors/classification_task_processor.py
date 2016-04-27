@@ -28,3 +28,5 @@ class ClassificationTaskProcessor(BaseMachineLearningTaskProcessor):
         fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, kNN(k=5, dfx=one_minus_correlation, voting='majority'), self.num_folds, True)
         fold_wise_processor.process()
         self.processing_model.result = fold_wise_processor.results
+
+        self.processing_model.accuracy = abs(np.mean(self.processing_model.result == self.ds.targets)) * 100

@@ -18,7 +18,6 @@ def get_affected_samples(trajectory_path, subject_timeline_path):
     words = s3['words']
 
     ds_cleaner_transform = compute_removal_from_start(words, ds_cleaner_transform)
-    print("gets this far")
     ds_cleaner_transform = add_padding_to_fill_breaks(words, ds_cleaner_transform)
     ds_cleaner_transform = add_padding_to_fill_gaps(ds_cleaner_transform)
 

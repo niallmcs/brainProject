@@ -3,6 +3,8 @@ from start_page import StartPage
 from base_machine_learning_view import BaseMachineLearningView
 from about_page import AboutPage
 from classification_task_view import ClassificationTaskView
+from correlation_task_view import CorrelationTaskView
+
 from regression_task_view import RegressionTaskView
 
 TITLE_FONT = ("Helvetica", 18, "bold")
@@ -21,7 +23,7 @@ class NeuroVisionApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, BaseMachineLearningView, PageTwo, AboutPage, ClassificationTaskView, RegressionTaskView):
+        for F in (StartPage, BaseMachineLearningView, PageTwo, AboutPage, ClassificationTaskView, RegressionTaskView, CorrelationTaskView):
             page_name = F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame

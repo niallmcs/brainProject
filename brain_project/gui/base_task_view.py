@@ -60,10 +60,7 @@ class BaseTaskView(bv.BaseView):
 
         self.process_button = ttk.Button(frame1, text="PROCESS", width=20, style="Bold.TButton", state='disabled', command=self.start_processing)
         self.process_button.pack(side=BOTTOM, padx=5, pady=50)
-
-        self.result_view = GraphPlotView(self)
-        self.result_view.grid(row = 0, column = 1, rowspan = 3, columnspan = 1, sticky = W+E+N+S)
-
+        
         status_view = Frame(self, bg="white")
         status_view.grid(row = 3, column = 1, rowspan = 3, columnspan = 1, sticky = W+E+N+S)
 

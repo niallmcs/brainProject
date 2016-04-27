@@ -4,6 +4,9 @@ from models.file_input_model import FileInputModel
 from models.base_processing_model import BaseProcessingModel
 from models.base_processing_request_model import BaseProcessingRequestModel
 from util import file_handler
+from views.graph_plot_view import GraphPlotView
+
+from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, BOTTOM, ttk, Canvas, StringVar
 
 class BaseMachineLearningView(BaseTaskView):
 
@@ -24,6 +27,9 @@ class BaseMachineLearningView(BaseTaskView):
 
         super(BaseMachineLearningView, self).create_widgets()
 
+        self.result_view = GraphPlotView(self)
+        self.result_view.grid(row = 0, column = 1, rowspan = 3, columnspan = 1, sticky = W+E+N+S)
+
     def update_ui_from_processing(self, *args):
 
         self.status_text.set(self.processing_model.progress.get() + " [" + self.processing_model.state.get() + "]")
@@ -32,6 +38,10 @@ class BaseMachineLearningView(BaseTaskView):
 
         if self.processing_model.state.get() == self.processing_model.FINISHED:
             self.is_processing_active = False
+
+            accuracy = "%.2f" % self.processing_model.accuracy
+
+            self.status_text.set(self.processing_model.progress.get() + " [Accuracy: " + accuracy + "%]")
 
             self.display_results()
 

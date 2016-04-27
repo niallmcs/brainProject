@@ -9,13 +9,6 @@ from mvpa2.suite import *
 
 def remove_samples(bold_path, mask_path, removal_tansform):
 
-    print("started")
-
-    print("bold " + bold_path)
-    print("mask "" + mask_path")
-    print("mask " + mask_path)
-
-
     ds = fmri_dataset(bold_path, mask=mask_path)
 
     detrender = PolyDetrendMapper(polyord=1)

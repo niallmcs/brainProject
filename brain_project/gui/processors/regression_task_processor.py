@@ -25,3 +25,4 @@ class RegressionTaskProcessor(BaseMachineLearningTaskProcessor):
         fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, SKLLearnerAdapter(DecisionTreeRegressor()), self.num_folds, True)
         fold_wise_processor.process()
         self.processing_model.result = fold_wise_processor.results
+        self.processing_model.accuracy = abs(np.corrcoef(self.processing_model.result, self.processing_model.original)[0, 1]) * 100
