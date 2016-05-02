@@ -10,9 +10,11 @@ from matplotlib.figure import Figure
 
 from util.brain_correlation_plotter import plot_lightbox
 
+from views.base_results_view import BaseResultsView
+
 plt.style.use('ggplot')
 
-class CorrelationGraphView(tk.Frame):
+class CorrelationGraphView(BaseResultsView):
 
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)

@@ -1,6 +1,6 @@
-from .task_processor import TaskProcessor
+from .base_task_processor import BaseTaskProcessor
 
-class BaseMachineLearningTaskProcessor(TaskProcessor):
+class BaseMachineLearningTaskProcessor(BaseTaskProcessor):
 
     num_folds = 3
 

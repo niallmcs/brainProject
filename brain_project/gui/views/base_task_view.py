@@ -1,5 +1,5 @@
 import tkinter as tk
-import base_view as bv
+import views.base_view as bv
 
 from views.file_input_view import FileInputView
 from views.graph_plot_view import GraphPlotView
@@ -11,7 +11,7 @@ from models.base_processing_request_model import BaseProcessingRequestModel
 from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, BOTTOM, ttk, Canvas, StringVar
 
 import queue
-from processors.task_processor import TaskProcessor
+from processors.base_task_processor import BaseTaskProcessor
 
 class BaseTaskView(bv.BaseView):
 
@@ -128,7 +128,7 @@ class BaseTaskView(bv.BaseView):
         self.processing_model.state.trace("w", self.update_ui_from_processing)
 
         self.queue = queue.Queue()
-        #TaskProcessor(self.queue, self.processing_model).startit()
+        #BaseTaskProcessor(self.queue, self.processing_model).startit()
         #self.master.after(100, self.process_queue)
 
     def update_ui_from_processing(self, *args):

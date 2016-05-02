@@ -1,11 +1,11 @@
 import tkinter as tk
-from start_page import StartPage
-from base_machine_learning_view import BaseMachineLearningView
-from about_page import AboutPage
-from classification_task_view import ClassificationTaskView
-from correlation_task_view import CorrelationTaskView
 
-from regression_task_view import RegressionTaskView
+from views.start_page import StartPage
+from views.base_machine_learning_view import BaseMachineLearningView
+from views.about_page import AboutPage
+from views.classification_task_view import ClassificationTaskView
+from views.correlation_task_view import CorrelationTaskView
+from views.regression_task_view import RegressionTaskView
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 

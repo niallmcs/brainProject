@@ -2,11 +2,11 @@ import threading
 import queue
 import time
 
-import machine_learning.foldwiseprocessor
-from machine_learning import targetdatautility
-from machine_learning.foldwiseprocessor import FoldWiseProcessor
-from machine_learning.fmrisamplecleaningtransform import get_affected_samples
-from machine_learning.fmricleaner import remove_samples
+import processing_layer.fold_wise_processor
+from processing_layer import target_data_utility
+from processing_layer.fold_wise_processor import FoldWiseProcessor
+from processing_layer.util.fmri_sample_cleaning_transform import get_affected_samples
+from processing_layer.util.fmri_cleaner import remove_samples
 
 import os
 import numpy as np
@@ -18,7 +18,7 @@ from mvpa2.suite import *
 from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
 
-class TaskProcessor(threading.Thread):
+class BaseTaskProcessor(threading.Thread):
 
     NOT_STARTED = "Not Started"
     SETUP = "Setting up"
@@ -64,3 +64,6 @@ class TaskProcessor(threading.Thread):
 
         self.processing_model.progress.set("100%")
         self.processing_model.state.set(self.FINISHED)
+
+    def compute_result(self):
+        pass

@@ -1,11 +1,12 @@
-from .task_processor import TaskProcessor
+from .base_task_processor import BaseTaskProcessor
 from .base_machine_learning_task_processor import BaseMachineLearningTaskProcessor
 
-import machine_learning.foldwiseprocessor
-from machine_learning import targetdatautility
-from machine_learning.foldwiseprocessor import FoldWiseProcessor
-from machine_learning.fmrisamplecleaningtransform import get_affected_samples
-from machine_learning.fmricleaner import remove_samples
+import processing_layer.fold_wise_processor
+from processing_layer import target_data_utility
+from processing_layer.fold_wise_processor import FoldWiseProcessor
+from processing_layer.util.fmri_sample_cleaning_transform import get_affected_samples
+from processing_layer.util.fmri_cleaner import remove_samples
+from processing_layer.quantifiers.regression_quantifier import RegressionQuantifier
 
 import os
 import numpy as np
@@ -25,4 +26,4 @@ class RegressionTaskProcessor(BaseMachineLearningTaskProcessor):
         fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, SKLLearnerAdapter(DecisionTreeRegressor()), self.num_folds, True)
         fold_wise_processor.process()
         self.processing_model.result = fold_wise_processor.results
-        self.processing_model.accuracy = abs(np.corrcoef(self.processing_model.result, self.processing_model.original)[0, 1]) * 100
+        self.processing_model.accuracy = RegressionQuantifier().compute_accuracy(self.processing_model.original, self.processing_model.result)

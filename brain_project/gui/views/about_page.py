@@ -1,5 +1,5 @@
 import tkinter as tk
-import base_view as bv
+import views.base_view as bv
 from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, BOTTOM, ttk, Canvas, NW, TOP, YES
 
 

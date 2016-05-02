@@ -1,4 +1,4 @@
-from base_machine_learning_view import BaseMachineLearningView
+from views.base_machine_learning_view import BaseMachineLearningView
 
 from models.file_input_model import FileInputModel
 from models.base_processing_model import BaseProcessingModel

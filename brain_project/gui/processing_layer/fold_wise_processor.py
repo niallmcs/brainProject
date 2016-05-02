@@ -1,7 +1,9 @@
+from .base_processor import BaseProcessor
+
 import numpy as np
 from mvpa2.suite import *
 
-class FoldWiseProcessor:
+class FoldWiseProcessor(BaseProcessor):
 
     results = []
 
@@ -114,10 +116,6 @@ class FoldWiseProcessor:
 
         #return the current chunk
         return self.chunks[turn]
-
-
-    def get_current_results(self):
-        return results
 
 
     def get_test_set_chunk_from_original(self, turn):

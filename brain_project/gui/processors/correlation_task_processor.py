@@ -1,4 +1,4 @@
-from .task_processor import TaskProcessor
+from .base_task_processor import BaseTaskProcessor
 
 from brainCorrelationPlotter import plot_lightbox
 import os
@@ -12,7 +12,7 @@ from nilearn.image import resample_img
 from nilearn import image
 from scipy.signal import resample
 
-class CorrelationTaskProcessor(TaskProcessor):
+class CorrelationTaskProcessor(BaseTaskProcessor):
 
     def compute_result(self):
         #work out the results of the correlation of each pixel/feature over time

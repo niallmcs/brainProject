@@ -1,10 +1,10 @@
 import tkinter as tk
-import base_view as bv
+from .base_view import BaseView
 from PIL import Image, ImageTk
 
 from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, BOTTOM, ttk, Canvas
 
-class StartPage(bv.BaseView):
+class StartPage(BaseView):
 
     def create_widgets(self):
 
@@ -14,19 +14,18 @@ class StartPage(bv.BaseView):
         logo_label.image = logo_image
         logo_label.pack(side="top", fill="x", pady=10)
 
-        button1 = tk.Button(self, text="Find Correlation between story and fMRI data",
+        correlation_button = tk.Button(self, text="Find Correlation between story and fMRI data",
                             command=lambda: self.controller.show_frame("CorrelationTaskView"), borderwidth=0)
-        button2 = tk.Button(self, text="Predict emotional response using Classification",
+        classification = tk.Button(self, text="Predict emotional response using Classification",
                             command=lambda: self.controller.show_frame("ClassificationTaskView"), borderwidth=0)
-        button1.pack(padx=5, pady=5)
         regression_button = tk.Button(self, text="Predict emotional response using Regression",
                             command=lambda: self.controller.show_frame("RegressionTaskView"), borderwidth=0)
-        button1.pack(padx=5, pady=5)
-        button2.pack(padx=5, pady=5)
-        regression_button.pack(padx=5, pady=5)
-
         about_button = tk.Button(self, text="About",
                             command=lambda: self.controller.show_frame("AboutPage"), borderwidth=0)
+        
+        correlation_button.pack(padx=5, pady=5)
+        classification.pack(padx=5, pady=5)
+        regression_button.pack(padx=5, pady=5)
         about_button.pack(side="right", padx=5, pady=5)
 
 

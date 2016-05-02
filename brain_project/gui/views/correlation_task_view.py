@@ -1,4 +1,4 @@
-from base_task_view import BaseTaskView
+from views.base_task_view import BaseTaskView
 
 from models.file_input_model import FileInputModel
 from models.base_processing_model import BaseProcessingModel

@@ -1,8 +1,10 @@
 import tkinter as tk
 
+import views.base_view as bv
+
 from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, ttk, Canvas, filedialog, StringVar
 
-class FileInputView(tk.Frame):
+class FileInputView(bv.BaseView):
 
     TITLE_FONT = ("Helvetica", 18, "bold")
 

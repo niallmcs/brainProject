@@ -1,11 +1,12 @@
-from .task_processor import TaskProcessor
+vfrom .base_task_processor import BaseTaskProcessor
 from .base_machine_learning_task_processor import BaseMachineLearningTaskProcessor
 
-import machine_learning.foldwiseprocessor
-from machine_learning import targetdatautility
-from machine_learning.foldwiseprocessor import FoldWiseProcessor
-from machine_learning.fmrisamplecleaningtransform import get_affected_samples
-from machine_learning.fmricleaner import remove_samples
+import processing_layer.fold_wise_processor
+from processing_layer.fold_wise_processor import FoldWiseProcessor
+from processing_layer.util import target_data_utility
+from processing_layer.util.fmri_sample_cleaning_transform import get_affected_samples
+from processing_layer.util.fmri_cleaner import remove_samples
+from processing_layer.quantifiers.classification_quantifier import ClassificationQuantifier
 
 import os
 import numpy as np
@@ -21,7 +22,7 @@ import matplotlib.pyplot as plt
 class ClassificationTaskProcessor(BaseMachineLearningTaskProcessor):
 
     def compute_result(self):
-        self.resampled_trajectory = targetdatautility.convert_targets_to_simple_values(self.resampled_trajectory)
+        self.resampled_trajectory = target_data_utility.convert_targets_to_simple_values(self.resampled_trajectory)
         self.processing_model.original = self.resampled_trajectory
         self.ds.sa['targets'] = self.resampled_trajectory
         
@@ -29,4 +30,4 @@ class ClassificationTaskProcessor(BaseMachineLearningTaskProcessor):
         fold_wise_processor.process()
         self.processing_model.result = fold_wise_processor.results
 
-        self.processing_model.accuracy = abs(np.mean(self.processing_model.result == self.ds.targets)) * 100
+        self.processing_model.accuracy = ClassificationQuantifier().compute_accuracy(self.ds.targets, self.processing_model.result)
