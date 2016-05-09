@@ -113,7 +113,7 @@ class BaseTaskView(bv.BaseView):
                 mask_loc = input_model.location
             elif input_model.title == "Experiment Metadata":
                 story_loc = input_model.location
-            elif input_model.title == "Target Trjactory":
+            elif input_model.title == "Target Trajectory":
                 trajectory_loc = input_model.location
             elif input_model.title == "Anatomy":
                 anatomy_loc = input_model.location

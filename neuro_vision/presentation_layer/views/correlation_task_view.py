@@ -33,7 +33,7 @@ class CorrelationTaskView(BaseTaskView):
         self.input_models.append(
             FileInputModel("Experiment Metadata", "The story data points", [('MATLAB files', '*.mat'), ('All files', '*')], file_handler.open_matlab))
         self.input_models.append(
-            FileInputModel("Target Trjactory", "The story data points", [('PICKLE files', '*.pkl'), ('All files', '*')], file_handler.open_pickle))
+            FileInputModel("Target Trajectory", "The story data points", [('PICKLE files', '*.pkl'), ('All files', '*')], file_handler.open_pickle))
 
 
         super(CorrelationTaskView, self).create_widgets()

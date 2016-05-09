@@ -26,7 +26,7 @@ class ClassificationTaskProcessor(BaseMachineLearningTaskProcessor):
         self.processing_model.original = self.resampled_trajectory
         self.ds.sa['targets'] = self.resampled_trajectory
         
-        fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, kNN(k=5, dfx=one_minus_correlation, voting='majority'), self.num_folds, True)
+        fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, kNN(k=9, dfx=one_minus_correlation, voting='majority'), self.num_folds, False)
         fold_wise_processor.process()
         self.processing_model.result = fold_wise_processor.results
 

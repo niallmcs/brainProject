@@ -1,4 +1,4 @@
-from .base_processor import BaseProcessor
+from processing_layer.base_processor import BaseProcessor
 
 import numpy as np
 from mvpa2.suite import *
@@ -7,13 +7,22 @@ class FoldWiseProcessor(BaseProcessor):
 
     results = []
 
-    def __init__(self, dataset, trajectory, analyser, number_of_folds, skip_nearest_neighbours=False):
+    def __init__(self, dataset, trajectory, analyser, number_of_folds, skip_nearest_neighbours=False, verbose=True):
+
+
+        if number_of_folds <= 1:
+            raise Exception("Number of folds must be greater than 1!")
+
+        if number_of_folds == 2 and skip_nearest_neighbours == True:
+            raise Exception("Cannot Skip Nearest Neighbour when number of folds is as low as 2!")
+
         #store all relevant information
         self.dataset = dataset
         self.trajectory = trajectory
         self.analyser = analyser
         self.number_of_folds = number_of_folds
         self.skip_nearest_neighbours = skip_nearest_neighbours
+        self.verbose = verbose
 
         #create folds
         #self.chunks = split_ds(self.dataset, number_of_folds)
@@ -36,14 +45,17 @@ class FoldWiseProcessor(BaseProcessor):
         turn = 0
 
         for i in range(0, self.number_of_folds):
-            print("starting turn :/ " + str(turn))
-            print("results contains " + str(len(self.results)) + " entries")
+
+            if self.verbose:
+                print("starting turn :/ " + str(turn))
+                print("results contains " + str(len(self.results)) + " entries")
 
             #get the relevant data
             training_set = self.get_trainig_set_chunks_from_original(turn)
             test_set = self.get_test_set_chunk_from_original(turn)
 
-            print(training_set.sa)
+            if self.verbose:
+                print(training_set.sa)
 
             #train the analyser/model
             self.analyser.train(training_set)
@@ -61,7 +73,6 @@ class FoldWiseProcessor(BaseProcessor):
             if type(predictions) is list:
                 temp_results.extend(predictions)
             else:
-                print(type(predictions))
                 temp_results.extend(predictions.ravel())
 
             #increment the turn
@@ -69,7 +80,8 @@ class FoldWiseProcessor(BaseProcessor):
 
         self.results = temp_results
 
-        print("Finished process")
+        if self.verbose:
+            print("Finished process")
 
         return self.results
 

@@ -11,6 +11,8 @@ from matplotlib.figure import Figure
 from presentation_layer.util.brain_correlation_plotter import plot_lightbox
 from presentation_layer.views.base_results_view import BaseResultsView
 
+from tkinter import Frame, W, N, E, S, Button, Label, RIGHT, LEFT, BOTH, BOTTOM, ttk, Canvas, StringVar, filedialog
+
 plt.style.use('ggplot')
 
 class CorrelationGraphView(BaseResultsView):
@@ -40,15 +42,30 @@ class CorrelationGraphView(BaseResultsView):
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
         
-
+        self.export_button = ttk.Button(self, text="Export Correlation as Nifti", state='disabled',
+                            command=lambda: self.export_results())
+        self.file_opt = options = {}
+        options['filetypes'] = [('nifti files', '.nii')]
+        options['initialfile'] = 'results.nii'
+        options['parent'] = parent
         
         
 
     def plot_results(self, overlay_data, mri_args):
         plot_lightbox(overlay=overlay_data, vlim=(-1.0, 1.0), do_stretch_colors=True, fig=self.figure, **mri_args)
 
+        self.overlay_data = overlay_data
+
         toolbar = NavigationToolbar2TkAgg(self.canvas, self)
         toolbar.update()
         self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
         
         self.canvas.draw()
+
+        self.export_button.config(state='normal')
+        self.export_button.pack(side="right", padx=5, pady=5)
+
+    def export_results(self):
+        file_location = filedialog.asksaveasfilename(**self.file_opt)
+        self.overlay_data.to_filename(file_location)
+        print("results saved to " + file_location)

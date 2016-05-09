@@ -23,7 +23,7 @@ from sklearn.tree import DecisionTreeRegressor
 class RegressionTaskProcessor(BaseMachineLearningTaskProcessor):
 
     def compute_result(self):
-        fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, SKLLearnerAdapter(DecisionTreeRegressor()), self.num_folds, True)
+        fold_wise_processor = FoldWiseProcessor(self.ds, self.resampled_trajectory, SKLLearnerAdapter(DecisionTreeRegressor(max_depth=2)), 20, False)
         fold_wise_processor.process()
         self.processing_model.result = fold_wise_processor.results
         self.processing_model.accuracy = RegressionQuantifier().compute_accuracy(self.processing_model.original, self.processing_model.result)
